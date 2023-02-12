@@ -18,8 +18,8 @@
 #include <iostream>
 #include <vector>
 
-TEST_CASE( "My first test", "[some group identifier]" ) {
-  int a = 5;
+TEST_CASE( "My first test", "[ex1.1]" ) {
+  int a = 1;
   REQUIRE( a < 6 );
 }
 

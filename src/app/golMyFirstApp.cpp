@@ -13,18 +13,23 @@
 =============================================================================*/
 
 #include <golMyFunctions.h>
+#include <golBasicTypes.h>
 #include <golExceptionMacro.h>
 #include <iostream>
-#include "Grid.h"
 
 int main(int argc, char** argv)
 {
-  Grid grid = Grid(4, 10);
+  gol::Grid grid = gol::Grid(4, 10);
   grid.printGrid();
   grid.setCell(3,4,true);
   std::cout << grid.getCell(3,4) << std::endl;
   grid.printGrid();
-  
+  grid.randomInit(5);
+  grid.printGrid();
+  grid.randomInit(10);
+  grid.printGrid();
+  grid.randomInit(50);
+  grid.printGrid();
   
 
   int returnStatus = EXIT_FAILURE;

@@ -42,8 +42,27 @@
 */
 
 //! Single namespace for all code in this package
+#include <vector>
+#include <iostream>
+#include <random>
 namespace gol
 {
+
+  class Grid{
+    public:
+    Grid(int N, int M);
+    Grid(int N, int M, int nAlive);
+
+    void setCell(int N, int M, bool value);
+    bool getCell(int N, int M);
+    void printGrid();
+    void randomInit(int nAlive);
+
+    private:
+    std::vector<std::vector<bool>> grid;
+    int nRows;
+    int nCols;
+  };
 
 } // end namespace
 
