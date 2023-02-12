@@ -15,9 +15,17 @@
 #include <golMyFunctions.h>
 #include <golExceptionMacro.h>
 #include <iostream>
+#include "Grid.h"
 
 int main(int argc, char** argv)
 {
+  Grid grid = Grid(4, 10);
+  grid.printGrid();
+  grid.setCell(3,4,true);
+  std::cout << grid.getCell(3,4) << std::endl;
+  grid.printGrid();
+  
+  
 
   int returnStatus = EXIT_FAILURE;
 
