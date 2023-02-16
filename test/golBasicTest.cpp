@@ -15,17 +15,21 @@
 #include "catch.hpp"
 #include "golCatchMain.h"
 #include "golMyFunctions.h"
+#include "golBasicTypes.h"
 #include <iostream>
 #include <vector>
 
+// check if cells have been initialised
 TEST_CASE( "My first test", "[ex1.1]" ) {
-  int a = 1;
-  REQUIRE( a < 6 );
+  gol::Grid grid = gol::Grid(4, 10);
+  REQUIRE( grid.getCell(0,0) == false);
 }
 
-TEST_CASE( "My second test", "[some group identifier]" ) {
-  std::vector<int> a;
-  REQUIRE( a.size() == 0 );
+// test if total number of placed cells is correct how???
+// test that different instances generate different patterns - overload = 
+TEST_CASE( "My second test", "[ex2.2]" ) {
+  gol::Grid grid = gol::Grid(4, 10, 6);
+  REQUIRE( 0 == 0 );
 }
 
 TEST_CASE( "Simple add", "[MyFirstAddFunction]") {

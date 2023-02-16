@@ -28,12 +28,38 @@ namespace gol {
     Grid::randomInit(nAlive);   
   }
 
+  Grid::Grid(std::string s){
+    std::string line;
+    std::ifstream myFile(s, std::ios::in);
+
+    if(myFile.is_open()){
+      // get input from txt line by line
+      while(std::getline(myFile, line)){
+        // iterate through line string and save values into the grid vector
+        std::vector<bool> row;
+
+        for(char& x : line){
+          if(x=='-'){
+            row.push_back(false);
+          } else if(x=='o'){
+            row.push_back(true);
+          }
+        }
+        grid.push_back(row);
+      }
+      myFile.close();
+    }
+
+    else std::cout << "Unable to open file" << std::endl;
+
+  }
+
   bool Grid::getCell(int N, int M){
-      return grid.at(N-1).at(M-1);
+      return grid.at(N).at(M);
   }
 
   void Grid::setCell(int N, int M, bool value){
-      grid.at(N-1).at(M-1) = value;
+      grid.at(N).at(M) = value;
   }
 
   void Grid::printGrid(){
@@ -50,26 +76,26 @@ namespace gol {
   }
 
   void Grid::randomInit(int nAlive){
-    // randomly generate the x,y coordinates and then set value to true, if value is already true run loop once more
-    std::mt19937 rng_mt;
-    std::uniform_int_distribution<int> distributionRow(1, nRows);
-    std::uniform_int_distribution<int> distributionCol(1, nCols);
-    int row;
-    int col;
+
     // set it to all alive if larger than number of total cells
     int alive = (nAlive>(nRows*nCols)) ? (nRows*nCols) : nAlive;
-    for(int i=0; i<alive; i++){
-      // generate random position
-      row = distributionRow(rng_mt);
-      col = distributionCol(rng_mt);
-      if(getCell(row, col)){
-        i--;
-      } 
-      else {
-        std::cout << "set a cell" << std::endl;
-        setCell(row, col, true);
-      }      
+
+    // to initialize the grid use std::shuffle, otherwise duplicate draws would slow down the random initialization
+    // each grid point is labelled by an integer, total of nCols*nRows, draw number 0-(nCols*nRows-1) 
+    // assign true to cell setCell(int(num/nCols), )
+    // this comes with memory overhead theta(nCols*nRows), but the time complexity of random initialisation becomes theta(nCols*nRows)
+
+    std::vector<int> v(nRows*nCols);
+    for(int i=0; i<nRows*nCols; i++){
+      v[i]=i;
     }
+    // shuffle array
+    std::random_shuffle(v.begin(), v.end());
+    for(int i=0; i<alive; i++){
+      int num=v[i];
+      setCell(int(num/nCols), num%nCols, true);
+    }
+
   }
 
 } // end namespace

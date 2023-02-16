@@ -19,10 +19,11 @@
 
 int main(int argc, char** argv)
 {
-  gol::Grid grid = gol::Grid(4, 10);
+  gol::Grid grid = gol::Grid("/workspaces/game-of-life-Goifd/test/data/glider.txt");
+  std::cout << "this is fine" << std::endl;
   grid.printGrid();
-  grid.setCell(3,4,true);
-  std::cout << grid.getCell(3,4) << std::endl;
+  grid.setCell(0,4,true);
+  std::cout << grid.getCell(0,4) << std::endl;
   grid.printGrid();
   grid.randomInit(5);
   grid.printGrid();
