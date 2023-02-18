@@ -60,9 +60,11 @@ namespace gol
     void setCell(int N, int M, bool value);
     bool getCell(int N, int M);
     void printGrid();
-    void randomInit(int nAlive);
+    int getLiveNeighbours(int N, int M);
+    
 
     private:   
+    void randomInit(int nAlive); 
     std::vector<std::vector<bool>> grid;
     int nRows;
     int nCols;

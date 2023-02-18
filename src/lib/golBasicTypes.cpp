@@ -95,7 +95,22 @@ namespace gol {
       int num=v[i];
       setCell(int(num/nCols), num%nCols, true);
     }
+  }
 
+  int Grid::getLiveNeighbours(int row, int col){
+    int alive = 0;
+    // check 8 neighbouring cells one-by-one, by iterating through the cells
+    for (int k = row-1; k <= row+1; k++) {
+      for (int l = col-1; l <= col+1; l++) {
+        //std::cout << "this is fine" << std::endl;
+        if (k >= 0 && k < nRows && l >= 0 && l < nCols && !(k == row && l == col)) {
+          //std::cout << "added"<< std::endl;
+          alive += grid[k][l];
+        }
+      }
+    }
+
+    return alive;
   }
 
 } // end namespace
