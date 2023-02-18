@@ -62,6 +62,14 @@ namespace gol {
       grid.at(N).at(M) = value;
   }
 
+  int Grid::getGridRows(){
+    return nRows;
+  }
+
+  int Grid::getGridCols(){
+    return nCols;
+  }
+
   void Grid::printGrid(){
       for(auto &row : grid){
           for(auto x : row){

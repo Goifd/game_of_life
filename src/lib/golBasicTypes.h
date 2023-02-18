@@ -59,8 +59,13 @@ namespace gol
 
     void setCell(int N, int M, bool value);
     bool getCell(int N, int M);
+
+    int getGridRows();
+    int getGridCols();
+
     void printGrid();
     int getLiveNeighbours(int N, int M);
+
     
 
     private:   
