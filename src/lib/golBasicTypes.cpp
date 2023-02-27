@@ -17,6 +17,14 @@
 namespace gol {
   // N is the number of rows, M is the number of columns
   Grid::Grid(int N, int M) : nRows(N), nCols(M){
+      // throw exception if grid size arguments are invalid
+      if(N<1 || M<1){
+        std::string errorMessage = "Invalid arguments for grid size: \n" 
+                                   + "nRows: " + std::to_string(N) + "\n"
+                                   + "nCols: " + std::to_string(M) + "\n"
+                                   + "nRows and nCols should be larger than 1.";
+      }
+        
       for(int i=0; i<N; i++){
           std::vector<bool> row(nCols, false); // initialise vector with all false values
           grid.push_back(row);
@@ -54,10 +62,12 @@ namespace gol {
 
   }
 
+  // using the .at method to throw exception automatically
   bool Grid::getCell(int N, int M){
       return grid.at(N).at(M);
   }
 
+  // using the .at method to throw exception automatically
   void Grid::setCell(int N, int M, bool value){
       grid.at(N).at(M) = value;
   }
