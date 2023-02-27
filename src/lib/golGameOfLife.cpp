@@ -1,4 +1,4 @@
-#include "GameOfLife.h"
+#include "golGameOfLife.h"
 
 GameOfLife::GameOfLife(gol::Grid& g):grid(g) {}
 

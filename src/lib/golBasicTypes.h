@@ -65,7 +65,13 @@ namespace gol
 
     void printGrid();
     int getLiveNeighbours(int N, int M);
+    // implement countAlive to test random initialisation 
+    int countAlive();
 
+    // override = for equality check between randomly initialized grids
+    // need to throw exception for mismatched size
+
+    bool operator==(Grid &y);
     
 
     private:   

@@ -18,6 +18,7 @@ set(PHAS0100ASSIGNMENT1_LIBRARY_SRCS
   golBasicTypes.cpp
   golMyFunctions.cpp
   golException.cpp
+  golGameOfLife.cpp
 )
 
 set(PHAS0100ASSIGNMENT1_LIBRARY_HDRS

@@ -14,18 +14,18 @@
 
 #include <golMyFunctions.h>
 #include <golBasicTypes.h>
-#include <GameOfLife.h>
+#include <golGameOfLife.h>
 #include <golExceptionMacro.h>
 #include <iostream>
 
 int main(int argc, char** argv)
 {
-  gol::Grid grid = gol::Grid("/workspaces/game-of-life-Goifd/test/data/glider.txt");
-  std::cout << "this is fine" << std::endl;
-  grid.printGrid();
+  gol::Grid grid = gol::Grid(3,3,3);
+  GameOfLife gol = GameOfLife(grid);
+  gol.printGrid();
+  gol.takeStep();
+  gol.printGrid();
   
-  
-
   int returnStatus = EXIT_FAILURE;
 
   try

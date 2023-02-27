@@ -19,10 +19,11 @@ namespace gol {
   Grid::Grid(int N, int M) : nRows(N), nCols(M){
       // throw exception if grid size arguments are invalid
       if(N<1 || M<1){
-        std::string errorMessage = "Invalid arguments for grid size: \n" 
-                                   + "nRows: " + std::to_string(N) + "\n"
-                                   + "nCols: " + std::to_string(M) + "\n"
-                                   + "nRows and nCols should be larger than 1.";
+        std::string errorMessage = "Invalid arguments for grid size: \n"
+                                   "nRows: " + std::to_string(N) + "\n"
+                                   "nCols: " + std::to_string(M) + "\n" 
+                                   "nRows and nCols should be larger than 1.";
+        throw std::invalid_argument(errorMessage);
       }
         
       for(int i=0; i<N; i++){
@@ -31,8 +32,20 @@ namespace gol {
       }
   }
 
-  Grid::Grid(int N, int M, int nAlive){
-    Grid(N, M);
+  Grid::Grid(int N, int M, int nAlive) : nRows(N), nCols(M){
+    // throw exception if grid size arguments are invalid
+    if(N<1 || M<1){
+      std::string errorMessage = "Invalid arguments for grid size: \n"
+                                 "nRows: " + std::to_string(N) + "\n"
+                                 "nCols: " + std::to_string(M) + "\n" 
+                                 "nRows and nCols should be larger than 1.";
+      throw std::invalid_argument(errorMessage);
+    }
+      
+    for(int i=0; i<N; i++){
+        std::vector<bool> row(nCols, false); // initialise vector with all false values
+        grid.push_back(row);
+    }
     Grid::randomInit(nAlive);   
   }
 
@@ -80,6 +93,18 @@ namespace gol {
     return nCols;
   }
 
+  int Grid::countAlive(){
+    int alive=0;
+    for(auto &row : grid){
+          for(auto x : row){
+              if(x){
+                alive++;
+              }               
+          }
+    }
+    return alive;
+  }
+
   void Grid::printGrid(){
       for(auto &row : grid){
           for(auto x : row){
@@ -94,9 +119,12 @@ namespace gol {
   }
 
   void Grid::randomInit(int nAlive){
-
-    // set it to all alive if larger than number of total cells
-    int alive = (nAlive>(nRows*nCols)) ? (nRows*nCols) : nAlive;
+    // throw exception for invalid argument
+    if(nAlive<0 || nAlive>(nRows*nCols)){
+      std::string errorMessage = "Number of alive cells must be between 0 and the total number of cells, inclusive. \n" 
+                                " Alive: " + std::to_string(nAlive) + ", nRows*nCols: " + std::to_string(nRows*nCols);
+      throw std::invalid_argument(errorMessage);
+    }
 
     // to initialize the grid use std::shuffle, otherwise duplicate draws would slow down the random initialization
     // each grid point is labelled by an integer, total of nCols*nRows, draw number 0-(nCols*nRows-1) 
@@ -109,7 +137,7 @@ namespace gol {
     }
     // shuffle array
     std::random_shuffle(v.begin(), v.end());
-    for(int i=0; i<alive; i++){
+    for(int i=0; i<nAlive; i++){
       int num=v[i];
       setCell(int(num/nCols), num%nCols, true);
     }
@@ -127,8 +155,25 @@ namespace gol {
         }
       }
     }
-
     return alive;
+  }
+
+  bool Grid::operator==(Grid &y){
+    // confirm that the two grid has the same dimensions
+    if(nRows!=y.getGridRows() || nCols!=y.getGridCols()){
+      std::string errorMessage = "= is only defined for grids with the same number of columns and rows.";
+      throw std::invalid_argument(errorMessage);
+    }
+
+    // iterate through grid and compare element-by-element
+    for(int i=0; i<nRows; i++){
+        for(int j=0; j<nCols; j++){
+          if(getCell(i,j)!=y.getCell(i,j))
+            return false;
+        }
+        std::cout << "\n";
+    }
+    return true;
   }
 
 } // end namespace
