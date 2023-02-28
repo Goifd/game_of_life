@@ -92,7 +92,57 @@ TEST_CASE("Random initialization test","[init2]"){
   
 }
 
-TEST_CASE("Initialisation from file", "[init3]"){}
+TEST_CASE("Initialisation from file", "[init3]"){
+  std::string s1 = "./test/data/oscillators.txt";
+  std::string s2 = "./test/data/glider.txt";
+  std::string s3 = "./test/data/still_lifes.txt";
+  std::string s4 = "./test/data/wrong_input_1.txt";
+  std::string s5 = "./test/data/wrong_input_2.txt";
+  std::string s6 = "./test/data/wrong_input_3.txt";
+  std::string s7 = "./test/data/wrong_input_4.txt";
+
+  // instead of hardcoding the patterns and comparing them these are to be checked by eye
+  gol::Grid g1 = gol::Grid(s1);
+  g1.printGrid();
+  gol::Grid g2 = gol::Grid(s2);
+  g2.printGrid();
+  gol::Grid g3 = gol::Grid(s3);
+  g3.printGrid();
+
+  // checking exceptions
+  bool exception = false;
+  try{
+    gol::Grid g5 = gol::Grid(s5);
+  }catch(const std::invalid_argument &e){
+    exception = true;
+  }
+  REQUIRE(exception==true);
+
+  exception = false;
+  try{
+    gol::Grid g6 = gol::Grid(s6);
+  }catch(const std::invalid_argument &e){
+    exception = true;
+  }
+  REQUIRE(exception==true);
+
+  exception = false;
+  try{
+    gol::Grid g7 = gol::Grid(s7);
+  }catch(const std::invalid_argument &e){
+    exception = true;
+  }
+  REQUIRE(exception==true);
+
+  exception = false;
+  try{
+    gol::Grid g4 = gol::Grid(s4);
+  }catch(const std::invalid_argument &e){
+    exception = true;
+  }
+  REQUIRE(exception==true);
+
+}
 
 TEST_CASE("== operator test"){
   gol::Grid g1 = gol::Grid(3,3);
@@ -152,5 +202,28 @@ TEST_CASE("countAlive test","[countAlive]"){
   REQUIRE(g2.countAlive() == 2);
 }
 
-TEST_CASE("getLiveNeighbours test"){}
+TEST_CASE("getLiveNeighbours test", "[getLiveNeighbours]"){
+  gol::Grid g1 = gol::Grid(1,1);
+  REQUIRE(g1.getLiveNeighbours(0,0)==0);
+
+  // testing row by row
+  gol::Grid g2 = gol::Grid("./test/data/glider.txt");
+  REQUIRE(g2.getLiveNeighbours(0,0)==0);
+  REQUIRE(g2.getLiveNeighbours(0,1)==1);
+  REQUIRE(g2.getLiveNeighbours(0,2)==1);
+  REQUIRE(g2.getLiveNeighbours(0,3)==1);
+  REQUIRE(g2.getLiveNeighbours(0,4)==0);
+
+  REQUIRE(g2.getLiveNeighbours(1,0)==1);
+  REQUIRE(g2.getLiveNeighbours(1,1)==3);
+  REQUIRE(g2.getLiveNeighbours(1,2)==1);
+  REQUIRE(g2.getLiveNeighbours(1,3)==2);
+  REQUIRE(g2.getLiveNeighbours(1,4)==0);
+
+  REQUIRE(g2.getLiveNeighbours(2,0)==1);
+  REQUIRE(g2.getLiveNeighbours(2,1)==5);
+  REQUIRE(g2.getLiveNeighbours(2,2)==3);
+  REQUIRE(g2.getLiveNeighbours(2,3)==3);
+  REQUIRE(g2.getLiveNeighbours(2,4)==0);
+}
 

@@ -52,27 +52,55 @@ namespace gol {
   Grid::Grid(std::string s){
     std::string line;
     std::ifstream myFile(s, std::ios::in);
+    bool flag = true;
+    bool isSpace = false;
+    int len = 0;
 
-    if(myFile.is_open()){
+      if(myFile.is_open()){
+      // CHECK FOR USER INPUT
+      // each line should be same length as first line
+      // lines should only contain - and o and maximum one consecutive space
+
       // get input from txt line by line
-      while(std::getline(myFile, line)){
-        // iterate through line string and save values into the grid vector
-        std::vector<bool> row;
+        while(std::getline(myFile, line)){
+          
+          std::vector<bool> row;
 
-        for(char& x : line){
-          if(x=='-'){
-            row.push_back(false);
-          } else if(x=='o'){
-            row.push_back(true);
+          // save length of first line
+          if(flag){
+            len=line.size();
+            flag=false;
           }
+
+          // throw exception if line length changes, special case for last line since enter is missing
+          if(line.size()!=len){ 
+            if(!(!std::getline(myFile, line) && line.size()==(len-1))){
+              std::string errorMessage = "File input format is invalid. 1";
+              throw std::invalid_argument(errorMessage);
+            }              
+          }
+            
+          // iterate through line string and save values into the grid vector, throw exception for wrong format
+          for(char x : line){
+            if(isSpace && !std::isspace(x) && x!='\n'){
+              std::string errorMessage = "File input format is invalid. 2";
+              throw std::invalid_argument(errorMessage); 
+            } else if(x=='-'){
+              row.push_back(false);           
+            } else if(x=='o'){
+              row.push_back(true); 
+            } 
+            isSpace = !isSpace;
+          }
+          grid.push_back(row);
         }
-        grid.push_back(row);
+        myFile.close();
       }
-      myFile.close();
-    }
 
     else std::cout << "Unable to open file" << std::endl;
-
+    nRows = grid.size();
+    nCols = grid.at(0).size();
+    
   }
 
   // using the .at method to throw exception automatically
@@ -149,9 +177,11 @@ namespace gol {
     for (int k = row-1; k <= row+1; k++) {
       for (int l = col-1; l <= col+1; l++) {
         //std::cout << "this is fine" << std::endl;
+        std::cout << "k: " << k << " l: " << l << std::endl;
+        
         if (k >= 0 && k < nRows && l >= 0 && l < nCols && !(k == row && l == col)) {
-          //std::cout << "added"<< std::endl;
-          alive += grid[k][l];
+          std::cout << "added"<< std::endl;
+          alive += grid.at(k).at(l);
         }
       }
     }
