@@ -145,8 +145,7 @@ namespace gol {
                   std::cout << "- ";
           }
           std::cout << "\n";
-      }
-      std::cout << std::endl;
+      };
   }
 
   void Grid::randomInit(int nAlive){

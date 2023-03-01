@@ -143,7 +143,7 @@ TEST_CASE("Initialisation from file", "[init3]"){
   }
   REQUIRE(exception==true);
 
-  // test invalid file exception
+  // test invalid path exception
   exception = false;
   try{
     gol::Grid g4 = gol::Grid("wrongpath");
@@ -250,7 +250,6 @@ TEST_CASE("getLiveNeighbours test", "[getLiveNeighbours]"){
   REQUIRE(g2.getLiveNeighbours(4,4)==0);
 }
 
-
 TEST_CASE("takeStep test", "[takeStep]"){
 
   std::string s1 = "./test/data/glider.txt";
@@ -322,9 +321,4 @@ TEST_CASE("takeStep test", "[takeStep]"){
   REQUIRE(gol3.getCell(8,6)==true);
   REQUIRE(gol3.getCell(8,7)==true);
   REQUIRE(gol3.getCell(9,1)==true);
-
-
-
-
-
 }
