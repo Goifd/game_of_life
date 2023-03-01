@@ -1,5 +1,6 @@
   #include <golBasicTypes.h>
   #include <iostream>
+  #include <string>
 
   class GameOfLife{
     public:
@@ -11,10 +12,7 @@
     bool getCell(int row, int col);
     void takeStep();
     int getAlive();
-    void printGrid(){
-        grid.printGrid();
-        std::cout << "--------------------------------------------------------" << std::endl;
-    }
+    void printGrid();
 
     private:   
     gol::Grid grid;

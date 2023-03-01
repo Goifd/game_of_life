@@ -22,12 +22,14 @@
 #include <CLI11.hpp>
 #include <bits/stdc++.h>
 #include <memory>
+#include <thread>
+#include <chrono>
 
 int main(int argc, char** argv)
 {
     CLI::App app{"Game of Life Simulator"};
     std::unique_ptr<GameOfLife> gof = nullptr; 
-    
+
     // these will throw exceptions if not initialised
     std::string filename = "default";
     int nRows = INT_MIN;
@@ -45,7 +47,6 @@ int main(int argc, char** argv)
     // throw exception by the parser if input format is invalid
     try{
         app.parse(argc, argv);
-        std::cout << filename << std::endl;
     }catch(const CLI::ParseError &e){
         return app.exit(e);
     }
@@ -54,13 +55,15 @@ int main(int argc, char** argv)
     // MAIN TRY BLOCK
     try
     {
+        // TEST IF ALL OF THE NECESSARY INPUT WAS GIVEN
         // if both -f and any of -r -c -a are defined throw exception
         // if neither of those are defined throw exception
         // if defined correctly, pass on to Grid, let class handle exceptions for bad input
         if((filename!="default" && (nRows != INT_MIN || nCols != INT_MIN || alive != INT_MIN)) 
         || (filename=="default" && (nRows == INT_MIN || nCols == INT_MIN || alive == INT_MIN))
         || steps==INT_MIN){
-            std::string errorMessage = "--file and --row --columns --alive flags cannot be used together or\n the necessary input parameters were not defined";
+            std::string errorMessage = "--file and --row --columns --alive flags cannot be used together" 
+                                        "or the necessary input parameters were not defined";
             throw std::invalid_argument(errorMessage);
 
         }
@@ -79,7 +82,8 @@ int main(int argc, char** argv)
         for(int i=0; i<steps; ++i){
             std::cout << "After iteration " << i+1  << ":" << std::endl;
             gof->takeStep();
-            gof->printGrid();      
+            gof->printGrid();
+            std::this_thread::sleep_for(std::chrono::seconds(1));      
         }
         returnStatus = EXIT_SUCCESS;
     }

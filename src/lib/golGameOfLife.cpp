@@ -42,3 +42,17 @@ bool GameOfLife::getCell(int row, int col){
 int GameOfLife::getAlive(){
     return grid.countAlive();
 }
+
+void GameOfLife::printGrid(){
+    // create separating line
+    // linear in number of columns, so does not come with much 
+    // computational overhead
+    std::string s = "";
+    for(int i=0; i<(grid.getGridCols()*2-1); i++){
+        s = s + "-";
+    }
+
+    grid.printGrid();
+    // print separating line after grid is printed
+    std::cout << s << std::endl;
+}
