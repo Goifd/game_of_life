@@ -10,7 +10,9 @@
     // this does not come with a more demanding user experience
     GameOfLife(gol::Grid& g);
     bool getCell(int row, int col);
-    void takeStep();
+
+    // takeStep returns the number of changed cells
+    int takeStep();
     int getAlive();
     void printGrid();
 

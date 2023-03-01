@@ -2,12 +2,13 @@
 
 GameOfLife::GameOfLife(gol::Grid& g):grid(g) {}
 
-void GameOfLife::takeStep(){
+int GameOfLife::takeStep(){
     // create a copy of current cell
     gol::Grid nextGrid = grid;
     int rows = grid.getGridRows();
     int cols = grid.getGridCols();
     int aliveNeigh = 0;
+    int counter = 0;
 
     // iterate through every cell and apply game rules
     for(int i=0; i<rows; ++i){
@@ -23,9 +24,13 @@ void GameOfLife::takeStep(){
             grid.getCell(i,j);
             if((!grid.getCell(i,j) && aliveNeigh==3) || (grid.getCell(i,j) && (aliveNeigh==2 || aliveNeigh==3))){
                 //std::cout << "this1" << std::endl;
+                if(!nextGrid.getCell(i,j))
+                    counter++;
                 nextGrid.setCell(i,j,true);
             } else{
                 //std::cout << "this1" << std::endl;
+                if(nextGrid.getCell(i,j))
+                    counter++;
                 nextGrid.setCell(i,j, false);
             }
         }
@@ -33,6 +38,8 @@ void GameOfLife::takeStep(){
 
     // refresh grid status
     grid = nextGrid;
+
+    return counter;
 }
 
 bool GameOfLife::getCell(int row, int col){
