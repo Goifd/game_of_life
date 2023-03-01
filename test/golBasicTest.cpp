@@ -16,6 +16,7 @@
 #include "golCatchMain.h"
 #include "golMyFunctions.h"
 #include "golBasicTypes.h"
+#include "golGameOfLife.h"
 #include <iostream>
 #include <vector>
 
@@ -142,9 +143,19 @@ TEST_CASE("Initialisation from file", "[init3]"){
   }
   REQUIRE(exception==true);
 
+  // test invalid file exception
+  exception = false;
+  try{
+    gol::Grid g4 = gol::Grid("wrongpath");
+  }catch(const std::invalid_argument &e){
+    exception = true;
+  }
+  REQUIRE(exception==true);
+
+
 }
 
-TEST_CASE("== operator test"){
+TEST_CASE("== operator test","[operator=]"){
   gol::Grid g1 = gol::Grid(3,3);
   gol::Grid g2 = gol::Grid(3,3);
   bool val=false;
@@ -225,5 +236,95 @@ TEST_CASE("getLiveNeighbours test", "[getLiveNeighbours]"){
   REQUIRE(g2.getLiveNeighbours(2,2)==3);
   REQUIRE(g2.getLiveNeighbours(2,3)==3);
   REQUIRE(g2.getLiveNeighbours(2,4)==0);
+
+  REQUIRE(g2.getLiveNeighbours(3,0)==2);
+  REQUIRE(g2.getLiveNeighbours(3,1)==3);
+  REQUIRE(g2.getLiveNeighbours(3,2)==2);
+  REQUIRE(g2.getLiveNeighbours(3,3)==2);
+  REQUIRE(g2.getLiveNeighbours(3,4)==0);
+
+  REQUIRE(g2.getLiveNeighbours(4,0)==1);
+  REQUIRE(g2.getLiveNeighbours(4,1)==2);
+  REQUIRE(g2.getLiveNeighbours(4,2)==2);
+  REQUIRE(g2.getLiveNeighbours(4,3)==1);
+  REQUIRE(g2.getLiveNeighbours(4,4)==0);
 }
 
+
+TEST_CASE("takeStep test", "[takeStep]"){
+
+  std::string s1 = "./test/data/glider.txt";
+  std::string s2 = "./test/data/oscillators.txt";
+  std::string s3 = "./test/data/still_lifes.txt";
+  
+  gol::Grid g1 = gol::Grid(s1);
+  gol::Grid g2 = gol::Grid(s2);
+  gol::Grid g3 = gol::Grid(s3);
+    
+  GameOfLife gol1 = GameOfLife(g1);
+  GameOfLife gol2 = GameOfLife(g2);
+  GameOfLife gol3 = GameOfLife(g3);
+
+  // only check for total number of alive cells and the alive cells
+
+  // test glider.txt
+  gol1.takeStep();
+  REQUIRE(gol1.getAlive()==5);
+  REQUIRE(gol1.getCell(1,1)==true);
+  REQUIRE(gol1.getCell(2,2)==true);
+  REQUIRE(gol1.getCell(2,3)==true);
+  REQUIRE(gol1.getCell(3,1)==true);
+  REQUIRE(gol1.getCell(3,2)==true);
+
+  gol1.takeStep();
+  REQUIRE(gol1.getAlive()==5);
+  REQUIRE(gol1.getCell(1,2)==true);
+  REQUIRE(gol1.getCell(2,3)==true);
+  REQUIRE(gol1.getCell(3,1)==true);
+  REQUIRE(gol1.getCell(3,2)==true);
+  REQUIRE(gol1.getCell(3,3)==true);
+
+  gol1.takeStep();
+  REQUIRE(gol1.getAlive()==5);
+  REQUIRE(gol1.getCell(2,1)==true);
+  REQUIRE(gol1.getCell(2,3)==true);
+  REQUIRE(gol1.getCell(3,2)==true);
+  REQUIRE(gol1.getCell(3,3)==true);
+  REQUIRE(gol1.getCell(4,2)==true);
+
+  gol1.takeStep();
+  REQUIRE(gol1.getAlive()==5);
+  REQUIRE(gol1.getCell(2,3)==true);
+  REQUIRE(gol1.getCell(3,1)==true);
+  REQUIRE(gol1.getCell(3,3)==true);
+  REQUIRE(gol1.getCell(4,2)==true);
+  REQUIRE(gol1.getCell(4,3)==true);
+
+  // test still_lifes.txt
+  gol3.takeStep();
+  REQUIRE(gol3.getAlive()==19);
+  REQUIRE(gol3.getCell(1,1)==true);
+  REQUIRE(gol3.getCell(1,2)==true);
+  REQUIRE(gol3.getCell(2,0)==true);
+  REQUIRE(gol3.getCell(2,3)==true);
+  REQUIRE(gol3.getCell(2,6)==true);
+  REQUIRE(gol3.getCell(2,7)==true);
+  REQUIRE(gol3.getCell(3,1)==true);
+  REQUIRE(gol3.getCell(3,2)==true);
+  REQUIRE(gol3.getCell(3,6)==true);
+  REQUIRE(gol3.getCell(3,8)==true);
+  REQUIRE(gol3.getCell(4,7)==true);
+  REQUIRE(gol3.getCell(7,1)==true);
+  REQUIRE(gol3.getCell(7,6)==true);
+  REQUIRE(gol3.getCell(7,7)==true);
+  REQUIRE(gol3.getCell(8,0)==true);
+  REQUIRE(gol3.getCell(8,2)==true);
+  REQUIRE(gol3.getCell(8,6)==true);
+  REQUIRE(gol3.getCell(8,7)==true);
+  REQUIRE(gol3.getCell(9,1)==true);
+
+
+
+
+
+}

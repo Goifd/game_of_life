@@ -97,7 +97,10 @@ namespace gol {
         myFile.close();
       }
 
-    else std::cout << "Unable to open file" << std::endl;
+    else {
+      std::string errorMessage =  "Unable to open file path is invalid.";
+      throw std::invalid_argument(errorMessage);
+    }
     nRows = grid.size();
     nCols = grid.at(0).size();
     
@@ -177,11 +180,16 @@ namespace gol {
     for (int k = row-1; k <= row+1; k++) {
       for (int l = col-1; l <= col+1; l++) {
         //std::cout << "this is fine" << std::endl;
-        std::cout << "k: " << k << " l: " << l << std::endl;
+        //std::cout << "k: " << k << " l: " << l << std::endl;
         
         if (k >= 0 && k < nRows && l >= 0 && l < nCols && !(k == row && l == col)) {
-          std::cout << "added"<< std::endl;
-          alive += grid.at(k).at(l);
+          //std::cout << "added"<< std::endl;
+          try{
+              alive += grid.at(k).at(l);
+          }catch(std::out_of_range &e){
+            //std::cout << "this is not working" << std::endl;
+          }
+          
         }
       }
     }
