@@ -58,8 +58,11 @@ The file input must be a .txt file with dead cells represented by - and alive ce
 
 E.g.:
 ```
-golSimulator -s 20 -f /path/to/file/input.txt or 
-golSimulator -s 20 -file /path/to/file/input.txt
+./golSimulator -s 20 -f /path/to/file/input.txt or 
+./golSimulator -s 20 -file /path/to/file/input.txt
+
+// after building to run one of the examples, run the following command from PHASAssignment1 folder
+./build/bin/golSimulator  -f ./test/data/glider.txt --steps 5
 ```
 This reads in input.txt and iterates the grid for 20 steps printing the grid after each step.
 
@@ -71,8 +74,11 @@ When using user defined initial conditions to specify the grid the following fla
 
 E.g.:
 ``` 
-golSimulator -r 10 -c 10 -a 13 -s 50 or
-golSimulator --row 10 --col 10 --alive 13 --steps 50
+./golSimulator -r 10 -c 10 -a 13 -s 50 or
+./golSimulator --row 10 --col 10 --alive 13 --steps 50
+
+// or to run an actual simulation run the following command from the PHASAssignment1 folder
+./build/bin/golSimulator  -r 10 -c 10 -a 40 -s 10
 ```
 This creates a grid of size 10x10 with 13 alive cells randomly placed on the grid and then iterates the grid for 50 steps printing the grid after every iteration.
 
@@ -93,8 +99,11 @@ optional flag:
 
 E.g.:
 ```
-golSimulator -r 10 -c 10 -a 13 -s 50 -n 200
-golSimulator --row 10 --col 10 --alive 13 --steps 50 --configs 200
+golStillSearch -r 10 -c 10 -a 13 -s 50 -n 200
+golStillSearch --row 10 --col 10 --alive 13 --steps 50 --configs 200
+
+// or to run a still search run the following command from PHASAssignment1
+./build/bin/golStillSearch  -r 10 -c 10 -a 13 -s 50 -n 200
 ```
 
 This creates and iterates 200 randomly generated grids for 50 steps maximum. Each grid is 10x10 and starts with 13 alive cells. If a still life is found the program prints it.
