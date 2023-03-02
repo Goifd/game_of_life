@@ -17,7 +17,7 @@
 #include <iostream>
 
 TEST_CASE( "My first test", "[init]" ) {
-
+  
   int expectedNumberOfArgs = 2;
   if (gol::argc != expectedNumberOfArgs)
   {

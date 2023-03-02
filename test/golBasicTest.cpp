@@ -94,19 +94,24 @@ TEST_CASE("Random initialization test","[init2]"){
 }
 
 TEST_CASE("Initialisation from file", "[init3]"){
-  std::string s1 = "./test/data/oscillators.txt";
-  std::string s2 = "./test/data/glider.txt";
-  std::string s3 = "./test/data/still_lifes.txt";
-  std::string s4 = "./test/data/wrong_input_1.txt";
-  std::string s5 = "./test/data/wrong_input_2.txt";
-  std::string s6 = "./test/data/wrong_input_3.txt";
-  std::string s7 = "./test/data/wrong_input_4.txt";
+  std::string s1 = "../../test/data/oscillators.txt";
+  std::string s2 = "../../test/data/glider.txt";
+  std::string s3 = "../../test/data/still_lifes.txt";
+  std::string s4 = "../../test/data/wrong_input_1.txt";
+  std::string s5 = "../../test/data/wrong_input_2.txt";
+  std::string s6 = "../../test/data/wrong_input_3.txt";
+  std::string s7 = "../../test/data/wrong_input_4.txt";
 
   // instead of hardcoding the patterns and comparing them these are to be checked by eye
   gol::Grid g1 = gol::Grid(s1);
+  std::cout << "oscillator.txt" << std::endl;
   g1.printGrid();
+  std::cout << "\n";
+  std::cout << "glider.txt" << std::endl;
   gol::Grid g2 = gol::Grid(s2);
   g2.printGrid();
+  std::cout << "\n";
+  std::cout << "still_lives.txt" << std::endl;
   gol::Grid g3 = gol::Grid(s3);
   g3.printGrid();
 
@@ -218,7 +223,7 @@ TEST_CASE("getLiveNeighbours test", "[getLiveNeighbours]"){
   REQUIRE(g1.getLiveNeighbours(0,0)==0);
 
   // testing row by row
-  gol::Grid g2 = gol::Grid("./test/data/glider.txt");
+  gol::Grid g2 = gol::Grid("../../test/data/glider.txt");
   REQUIRE(g2.getLiveNeighbours(0,0)==0);
   REQUIRE(g2.getLiveNeighbours(0,1)==1);
   REQUIRE(g2.getLiveNeighbours(0,2)==1);
@@ -252,9 +257,9 @@ TEST_CASE("getLiveNeighbours test", "[getLiveNeighbours]"){
 
 TEST_CASE("takeStep test", "[takeStep]"){
 
-  std::string s1 = "./test/data/glider.txt";
-  std::string s2 = "./test/data/oscillators.txt";
-  std::string s3 = "./test/data/still_lifes.txt";
+  std::string s1 = "../../test/data/glider.txt";
+  std::string s2 = "../../test/data/oscillators.txt";
+  std::string s3 = "../../test/data/still_lifes.txt";
   
   gol::Grid g1 = gol::Grid(s1);
   gol::Grid g2 = gol::Grid(s2);

@@ -22,33 +22,6 @@
 
 int main(int argc, char** argv)
 {
-  std::string s1 = "./test/data/oscillators.txt";
-  std::string s2 = "./test/data/glider.txt";
-  std::string s3 = "./test/data/still_lifes.txt";
-  
-    gol::Grid g1 = gol::Grid(s1);
-    gol::Grid g2 = gol::Grid(s2);
-    gol::Grid g3 = gol::Grid(s3);
-    
-    GameOfLife gol1 = GameOfLife(g3);
-    gol1.printGrid();
-    gol1.takeStep();
-    gol1.printGrid();
-    gol1.takeStep();
-    gol1.printGrid();
-    gol1.takeStep();
-    gol1.printGrid();
-    gol1.takeStep();
-    gol1.printGrid();
-    gol1.takeStep();
-    gol1.printGrid();
-  
-
- 
-
-
-  
-
   int returnStatus = EXIT_FAILURE;
 
   try

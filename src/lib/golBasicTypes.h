@@ -50,7 +50,10 @@
 
 namespace gol
 {
-
+  // Grid is the class used to represent the grid in the Game of Life game
+  // it can be initialised all dead, random or from a file
+  // cells can be individually set dead or alive after initialisation
+  // there is functionality for printing, and counting the alive neighbouring cells for a single cell
   class Grid{
     public:
     Grid(int N, int M);
@@ -65,14 +68,12 @@ namespace gol
 
     void printGrid();
     int getLiveNeighbours(int N, int M);
+
     // implement countAlive to test random initialisation 
     int countAlive();
-
     // override = for equality check between randomly initialized grids
     // need to throw exception for mismatched size
-
     bool operator==(Grid &y);
-    
 
     private:   
     void randomInit(int nAlive); 

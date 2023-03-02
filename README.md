@@ -36,4 +36,60 @@ cd build
 ctest
 ```
 
-Additional build and running instructions left to the student.
+User Instructions
+-----------------------------
+
+the appplication comes with two main executable files:
+golSimulator
+golStillSearch
+
+golSimulator:
+- this file creates a grid and runs the game of life simulation for an arbitrary number of steps and prints the grid after every step
+- the grid can be initialised two ways:
+
+From file the following flags have to be specified:
+-f / --file
+-s / --steps
+optional flag:
+-h / --help
+
+E.g.:
+golSimulator -s 20 -f /path/to/file/input.txt or 
+golSimulator -s 20 -file /path/to/file/input.txt
+
+Using random initial conditions the following flags have to be specified:
+-r / --row: number of grid rows
+-c / --col: number of grid columbs
+-s / --steps: how many steps to simulate
+-a / --alive:
+
+E.g.:
+golSimulator -r 10 -c 10 -a 13 -s 50 or
+golSimulator --row 10 --col 10 --alive 13 --steps 50
+
+
+golStillSearch:
+- this file can be used to search for still lives on the grid
+- after the user specifies the initial grid the application runs until it finds a still life, or reaches the maximum number of steps defined by --number.
+- after finding a still life the application prints it
+
+The following flags have to be specified:
+-r / --row 
+-c / --col
+-s / --steps
+-a / --alive
+-n / --number
+optional flag:
+-h /--help
+
+E.g.:
+golSimulator -r 10 -c 10 -a 13 -s 50 -n 200
+golSimulator --row 10 --col 10 --alive 13 --steps 50 --number 200
+
+Example still lives on a 4x4 grid:
+
+
+
+
+
+

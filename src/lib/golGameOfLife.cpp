@@ -8,29 +8,28 @@ int GameOfLife::takeStep(){
     int rows = grid.getGridRows();
     int cols = grid.getGridCols();
     int aliveNeigh = 0;
+
+    // count how many cells change status, helpful for still life search
     int counter = 0;
 
     // iterate through every cell and apply game rules
     for(int i=0; i<rows; ++i){
         for(int j=0; j<cols; ++j){
+            // get the alive neighbours for current cell
             aliveNeigh = grid.getLiveNeighbours(i,j);
-            //std::cout << grid.getGridRows() << std::endl;
-            //std::cout << grid.getGridCols() << std::endl;
-            //std::cout << rows << std::endl;
-            //std::cout << cols << std::endl;
-            //std::cout << "this0" << std::endl;
-            //std::cout << i << std::endl;
-            //std::cout << j << std::endl;
-            grid.getCell(i,j);
+
+            // apply game rules 
             if((!grid.getCell(i,j) && aliveNeigh==3) || (grid.getCell(i,j) && (aliveNeigh==2 || aliveNeigh==3))){
-                //std::cout << "this1" << std::endl;
+                // increase counter if cell was dead and will be alive after step
                 if(!nextGrid.getCell(i,j))
                     counter++;
+
                 nextGrid.setCell(i,j,true);
             } else{
-                //std::cout << "this1" << std::endl;
+                // increase counter if cell was alive and will be dead after step
                 if(nextGrid.getCell(i,j))
                     counter++;
+                
                 nextGrid.setCell(i,j, false);
             }
         }
@@ -39,6 +38,7 @@ int GameOfLife::takeStep(){
     // refresh grid status
     grid = nextGrid;
 
+    // return the number of changed cells
     return counter;
 }
 
