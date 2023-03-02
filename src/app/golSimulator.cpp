@@ -30,7 +30,7 @@ int main(int argc, char** argv)
     CLI::App app{"Game of Life Simulator"};
     std::unique_ptr<GameOfLife> gof = nullptr; 
 
-    // these will throw exceptions if not initialised
+    // these will throw exceptions if not initialised by user
     std::string filename = "default";
     int nRows = INT_MIN;
     int nCols = INT_MIN;
@@ -38,8 +38,8 @@ int main(int argc, char** argv)
     int steps = INT_MIN;
 
     // build parser
-    app.add_option("-f,--file", filename, "Path to input file.");
-    app.add_option("-r, --row", nRows, "Number of rows, has to be larger than 1.");
+    app.add_option("-f, --file", filename, "Path to input file.");
+    app.add_option("-r, --rows", nRows, "Number of rows, has to be larger than 1.");
     app.add_option("-c, --columns", nCols, "Number of columns, hast ot be larger than 1.");
     app.add_option("-a, --alive", alive, "Number of alive cells, has to be between 0 and the total number of cells.");
     app.add_option("-s, --steps", steps, "Number of steps to take. Has to be a positive number");

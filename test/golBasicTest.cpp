@@ -20,6 +20,8 @@
 #include <iostream>
 #include <vector>
 
+// INSTANTIATION/INITIALIZATION CHECKS
+
 // check if grid is correctly initialised using the constructors
 TEST_CASE("Initialisation with 2 parameters", "[init1]" ) {
 
@@ -159,6 +161,9 @@ TEST_CASE("Initialisation from file", "[init3]"){
 
 
 }
+
+
+// FUNCTIONALITY TESTS
 
 TEST_CASE("== operator test","[operator=]"){
   gol::Grid g1 = gol::Grid(3,3);

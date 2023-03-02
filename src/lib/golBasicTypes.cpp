@@ -156,10 +156,11 @@ namespace gol {
       throw std::invalid_argument(errorMessage);
     }
 
-    // to initialize the grid use std::shuffle, otherwise duplicate draws would slow down the random initialization
-    // each grid point is labelled by an integer, total of nCols*nRows, draw number 0-(nCols*nRows-1) 
+    // to initialize the grid use std::shuffle, otherwise duplicate draws would slow down the random initialization (E.g. if code randomly picked a x and y value)
+    // each grid point is labelled by an integer, total of nCols*nRows, shuffle array, first nAlive array elements will be the locations of the alive cells
     // assign true to cell setCell(int(num/nCols), )
     // this comes with memory overhead theta(nCols*nRows), but the time complexity of random initialisation becomes theta(nCols*nRows)
+    // this is especially important when using large grids and a large number of alive cells where duplicate position draws would massively effect runtime
 
     std::vector<int> v(nRows*nCols);
     for(int i=0; i<nRows*nCols; i++){
@@ -167,6 +168,7 @@ namespace gol {
     }
     // shuffle array
     std::random_shuffle(v.begin(), v.end());
+    // use shuffled array values as indicies and set cells residing at these locations alive
     for(int i=0; i<nAlive; i++){
       int num=v[i];
       setCell(int(num/nCols), num%nCols, true);

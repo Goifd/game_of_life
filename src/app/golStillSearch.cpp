@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 
     // build parser
     app.add_option("-n,--configs", configs, "Number of random configurations to try.");
-    app.add_option("-r, --row", nRows, "Number of rows, has to be larger than 1.");
+    app.add_option("-r, --rows", nRows, "Number of rows, has to be larger than 1.");
     app.add_option("-c, --columns", nCols, "Number of columns, hast ot be larger than 1.");
     app.add_option("-a, --alive", alive, "Number of alive cells, has to be between 0 and the total number of cells.");
     app.add_option("-s, --steps", steps, "Number of steps to take. Has to be a positive number");
@@ -55,9 +55,8 @@ int main(int argc, char** argv)
     try
     {
         // TEST IF ALL OF THE NECESSARY INPUT WAS GIVEN
-        // if both -f and any of -r -c -a are defined throw exception
-        // if neither of those are defined throw exception
-        // if defined correctly, pass on to Grid, let class handle exceptions for bad input
+        // if one of -n -r -c -a -s is not defined by user throw exception
+        // if defined, pass on to Grid, let class handle exceptions for bad input
         if(nRows == INT_MIN || nCols == INT_MIN || alive == INT_MIN || configs == INT_MIN || steps == INT_MIN){
             std::string errorMessage = "The necessary input parameters were not defined";
             throw std::invalid_argument(errorMessage);

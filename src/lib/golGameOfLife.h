@@ -1,3 +1,7 @@
+  #ifndef GameOfLife_h
+  #define GameOfLife_h
+  
+  
   #include <golBasicTypes.h>
   #include <iostream>
   #include <string>
@@ -25,3 +29,5 @@
     private:   
     gol::Grid grid;
   };
+
+  #endif
